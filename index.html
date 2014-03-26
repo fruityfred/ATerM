@@ -1,0 +1,83 @@
+<html>
+<head>
+<style type="text/css">
+body {
+	background: black;
+	color: white;
+	font-family: Courier;
+}
+</style>
+<body>
+
+<pre id="atm">
+</pre>
+
+<script type="text/javascript">
+	(function() {
+
+		"use strict";
+
+		function ATM (elId)
+		{
+			var el = document.getElementById(elId),
+			    commands = {};
+
+			function addLine (line)
+			{
+				el.innerHTML += (line || '') + "\n";
+			}
+
+			function addCmd (line)
+			{
+				el.innerHTML += 'dab$ ' + (line || '') + "\n";
+			}
+
+			commands.help = function ()
+			{
+				addCmd('help');
+				addLine('ATM - version 0.1 - Copyright (c) FruityFred 2014');
+				addLine();
+				addLine('Available commands:');
+				addLine('- withdraw');
+				addLine();
+			};
+
+			commands.withdraw = function (args)
+			{
+				addCmd('withdraw ' + (args || ''));
+				if (! args) {
+					addLine('usage: withdraw [--account] [--currency] [--pin] amount')
+				} else {
+					addLine('Please enter PIN code:');
+				}
+			};
+
+			return {
+				line : addLine,
+				cmd  : addCmd,
+
+				// Commands
+				help : commands.help,
+				withdraw : commands.withdraw
+			};
+		}
+
+		var atm = new ATM('atm');
+
+		atm.line('  ______  ________  __       __ ');
+		atm.line(' /      \\|        \\|  \\     /  \\');
+		atm.line('|  $$$$$$\\\\$$$$$$$$| $$\\   /  $$');
+		atm.line('| $$__| $$  | $$   | $$$\\ /  $$$');
+		atm.line('| $$    $$  | $$   | $$$$\\  $$$$');
+		atm.line('| $$$$$$$$  | $$   | $$\\$$ $$ $$');
+		atm.line('| $$  | $$  | $$   | $$ \\$$$| $$');
+		atm.line('| $$  | $$  | $$   | $$  \\$ | $$');
+		atm.line(' \\$$   \\$$   \\$$    \\$$      \\$$');
+		atm.line();
+		atm.help();
+		atm.withdraw();
+		atm.withdraw('--account 001222516698 --currency EUR 50.00');
+	})();
+</script>
+</body>
+</html>
